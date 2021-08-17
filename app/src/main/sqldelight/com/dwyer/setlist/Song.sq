@@ -1,0 +1,15 @@
+CREATE TABLE SongModel (
+    songId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    artist TEXT NOT NULL,
+    title TEXT NOT NULL,
+    original INTEGER AS Boolean NOT NULL DEFAULT 0
+);
+
+select_all:
+SELECT
+*
+FROM
+SongModel
+ORDER BY
+artist ASC,
+title ASC;

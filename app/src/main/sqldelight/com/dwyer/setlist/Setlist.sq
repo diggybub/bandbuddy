@@ -1,0 +1,18 @@
+import org.joda.time.DateTime;
+
+CREATE TABLE SetlistModel (
+    setlistId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    date INTEGER AS DateTime NOT NULL,
+    songId INTEGER NOT NULL,
+    FOREIGN KEY (songId) REFERENCES SongModel(songId)
+);
+
+select_all:
+SELECT
+date, SongModel.artist, SongModel.title, SongModel.original
+FROM
+SongModel
+INNER JOIN SetlistModel ON SongModel.songId = SetlistModel.songId
+ORDER BY
+artist ASC,
+title ASC;
