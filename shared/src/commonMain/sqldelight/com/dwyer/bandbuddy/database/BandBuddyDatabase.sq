@@ -1,0 +1,91 @@
+CREATE TABLE Song (
+    id TEXT PRIMARY KEY NOT NULL,
+    title TEXT NOT NULL,
+    artist TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'TO_LEARN'
+);
+
+CREATE TABLE Setlist (
+    id TEXT PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    date TEXT NOT NULL,
+    venue TEXT NOT NULL
+);
+
+CREATE TABLE SetlistItem (
+    id TEXT PRIMARY KEY NOT NULL,
+    setlistId TEXT NOT NULL,
+    songId TEXT NOT NULL,
+    orderIndex INTEGER NOT NULL,
+    notes TEXT NOT NULL DEFAULT '',
+    segue TEXT NOT NULL DEFAULT '',
+    FOREIGN KEY (setlistId) REFERENCES Setlist(id) ON DELETE CASCADE,
+    FOREIGN KEY (songId) REFERENCES Song(id) ON DELETE CASCADE
+);
+
+-- Song queries
+insertSong:
+INSERT INTO Song(id, title, artist, status)
+VALUES (?, ?, ?, ?);
+
+getAllSongs:
+SELECT * FROM Song ORDER BY artist, title;
+
+getSongsByArtist:
+SELECT * FROM Song WHERE artist = ? ORDER BY title;
+
+updateSongStatus:
+UPDATE Song SET status = ? WHERE id = ?;
+
+deleteSong:
+DELETE FROM Song WHERE id = ?;
+
+-- Setlist queries
+insertSetlist:
+INSERT INTO Setlist(id, name, date, venue)
+VALUES (?, ?, ?, ?);
+
+getAllSetlists:
+SELECT * FROM Setlist ORDER BY date DESC;
+
+getSetlistById:
+SELECT * FROM Setlist WHERE id = ?;
+
+updateSetlist:
+UPDATE Setlist SET name = ?, date = ?, venue = ? WHERE id = ?;
+
+deleteSetlist:
+DELETE FROM Setlist WHERE id = ?;
+
+-- SetlistItem queries
+insertSetlistItem:
+INSERT INTO SetlistItem(id, setlistId, songId, orderIndex, notes, segue)
+VALUES (?, ?, ?, ?, ?, ?);
+
+getSetlistItems:
+SELECT 
+    si.*,
+    s.title,
+    s.artist
+FROM SetlistItem si
+JOIN Song s ON si.songId = s.id
+WHERE si.setlistId = ?
+ORDER BY si.orderIndex;
+
+getSetlistItemById:
+SELECT * FROM SetlistItem WHERE id = ?;
+
+updateSetlistItemOrder:
+UPDATE SetlistItem SET orderIndex = ? WHERE id = ?;
+
+updateSetlistItemNotes:
+UPDATE SetlistItem SET notes = ? WHERE id = ?;
+
+updateSetlistItemSegue:
+UPDATE SetlistItem SET segue = ? WHERE id = ?;
+
+deleteSetlistItem:
+DELETE FROM SetlistItem WHERE id = ?;
+
+deleteAllSetlistItems:
+DELETE FROM SetlistItem WHERE setlistId = ?;
