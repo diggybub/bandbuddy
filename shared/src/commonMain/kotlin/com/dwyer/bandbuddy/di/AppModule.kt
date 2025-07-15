@@ -9,7 +9,8 @@ val appModule = module {
 // All modules for easy access
 val allModules = listOf(
     persistentRepositoryModule,
-    useCaseModule
+    useCaseModule,
+    authBandModule
 )
 
 // Basic modules (for testing)

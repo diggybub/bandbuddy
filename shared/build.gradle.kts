@@ -30,15 +30,18 @@ kotlin {
     }
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.koin.core)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.kotlinx.datetime)
-            implementation("app.cash.sqldelight:runtime:2.0.2")
-            // Removed Voyager dependencies temporarily due to Compose runtime conflicts
-            // implementation(libs.voyager.navigator)
-            // implementation(libs.voyager.tab.navigator)
-            // implementation(libs.voyager.koin)
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.koin.core)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.datetime)
+                implementation("app.cash.sqldelight:runtime:2.0.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                // Removed Voyager dependencies temporarily due to Compose runtime conflicts
+                // implementation(libs.voyager.navigator)
+                // implementation(libs.voyager.tab.navigator)
+                // implementation(libs.voyager.koin)
+            }
         }
 
         androidMain.dependencies {

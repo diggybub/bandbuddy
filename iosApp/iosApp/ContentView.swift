@@ -1,16 +1,27 @@
 import SwiftUI
-import shared
 
+// MARK: - Main Content View
 struct ContentView: View {
-	let greet = Greeting().greet()
-
-	var body: some View {
-		Text(greet)
-	}
+    @State private var isAuthenticated = false
+    
+    var body: some View {
+        Group {
+            if isAuthenticated {
+                MainView(onLogout: {
+                    isAuthenticated = false
+                })
+            } else {
+                AuthView(onAuthenticated: {
+                    isAuthenticated = true
+                })
+            }
+        }
+    }
 }
 
+// MARK: - Preview
 struct ContentView_Previews: PreviewProvider {
-	static var previews: some View {
-		ContentView()
-	}
+    static var previews: some View {
+        ContentView()
+    }
 }

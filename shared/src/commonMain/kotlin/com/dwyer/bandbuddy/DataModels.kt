@@ -1,5 +1,6 @@
 package com.dwyer.bandbuddy
 
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 
 data class Song(
@@ -27,3 +28,32 @@ data class SetlistItem(
     val notes: String = "",
     val segue: String = ""
 )
+
+data class User(
+    val id: String,
+    val email: String,
+    val displayName: String,
+    val bandId: String? = null,
+    val role: UserRole = UserRole.MEMBER
+)
+
+enum class UserRole { ADMIN, MEMBER }
+
+data class Band(
+    val id: String,
+    val name: String,
+    val createdBy: String,
+    val createdAt: Instant,
+    val members: List<String> = emptyList()
+)
+
+data class BandInvite(
+    val id: String,
+    val bandId: String,
+    val email: String,
+    val invitedBy: String,
+    val createdAt: Instant,
+    val status: InviteStatus = InviteStatus.PENDING
+)
+
+enum class InviteStatus { PENDING, ACCEPTED, DECLINED }

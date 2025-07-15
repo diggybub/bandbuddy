@@ -2,6 +2,7 @@ package com.dwyer.bandbuddy.android
 
 import android.app.Application
 import com.dwyer.bandbuddy.BandBuddyApp
+import com.dwyer.bandbuddy.di.authBandModule
 import com.dwyer.bandbuddy.di.exportModule
 import org.koin.core.context.loadKoinModules
 
@@ -18,7 +19,8 @@ class BandBuddyApplication : Application() {
                 org.koin.dsl.module {
                     single { this@BandBuddyApplication as android.content.Context }
                 },
-                exportModule
+                exportModule,
+                authBandModule
             )
         )
     }
